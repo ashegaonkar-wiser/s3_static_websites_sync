@@ -74,8 +74,9 @@ def get_git_changed_files(local_folder):
 
         # Filter to only files in the target folder
         folder_files = []
+        folder_name = os.path.basename(local_folder)
         for file in all_files:
-            if file and file.startswith(local_folder + "/"):
+            if file and file.startswith(folder_name + "/"):
                 filename = os.path.basename(file)
                 if not filename.startswith(".") and not filename.endswith(".py"):
                     if os.path.isfile(file):
