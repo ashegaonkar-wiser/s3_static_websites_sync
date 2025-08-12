@@ -1,0 +1,92 @@
+#!/usr/bin/env python3
+
+import os
+import boto3
+from botocore.exceptions import NoCredentialsError
+
+
+def list_project_folders():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    folders = []
+    for item in os.listdir(script_dir):
+        item_path = os.path.join(script_dir, item)
+        if (
+            os.path.isdir(item_path)
+            and not item.startswith(".")
+            and item != "__pycache__"
+        ):
+            folders.append(item)
+    return sorted(folders)
+
+
+def select_bucket():
+    folders = list_project_folders()
+    if not folders:
+        print("No folders found in project directory")
+        return None
+
+    print("\nAvailable project folders (S3 bucket names):")
+    for i, folder in enumerate(folders, 1):
+        print(f"{i}. {folder}")
+
+    while True:
+        try:
+            choice = input(f"\nSelect folder/bucket (1-{len(folders)}): ").strip()
+            if choice.lower() == "q":
+                return None
+            index = int(choice) - 1
+            if 0 <= index < len(folders):
+                return folders[index]
+            else:
+                print(f"Please enter a number between 1 and {len(folders)}")
+        except ValueError:
+            print("Please enter a valid number or 'q' to quit")
+
+
+def upload_to_s3(local_folder, bucket_name, s3_prefix=""):
+    try:
+        s3_client = boto3.client("s3")
+
+        for root, dirs, files in os.walk(local_folder):
+            for file in files:
+                if file.startswith(".") or file.endswith(".py"):
+                    continue
+
+                local_path = os.path.join(root, file)
+                relative_path = os.path.relpath(local_path, local_folder)
+                s3_key = relative_path.replace("\\", "/")
+
+                s3_client.upload_file(local_path, bucket_name, s3_key)
+                print(f"Uploaded: {s3_key}")
+
+    except NoCredentialsError:
+        print(
+            "AWS credentials not found. Configure AWS CLI or set environment variables."
+        )
+    except ClientError as e:
+        if e.response["Error"]["Code"] == "NoSuchBucket":
+            print(f"Error: S3 bucket '{bucket_name}' does not exist")
+        else:
+            print(f"Error: {e}")
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    selected_folder = select_bucket()
+    if not selected_folder:
+        print("No folder selected")
+        exit(1)
+
+    local_folder = os.path.join(script_dir, selected_folder)
+    bucket_name = selected_folder
+    s3_prefix = selected_folder
+
+    if not os.path.exists(local_folder):
+        print(f"Error: Folder {local_folder} does not exist")
+        exit(1)
+
+    print(f"\nUploading folder '{selected_folder}' to S3 bucket '{bucket_name}'")
+    upload_to_s3(local_folder, bucket_name, s3_prefix)

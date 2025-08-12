@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechMart - Premium Wireless Headphones</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; }
+        
+        .header { background: #2c3e50; color: white; padding: 15px 0; }
+        .nav { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .logo { font-size: 24px; font-weight: bold; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .breadcrumb { margin-bottom: 20px; color: #666; }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        
+        .product-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        
+        .product-images { text-align: center; }
+        .main-image { width: 100%; max-width: 400px; background: #ecf0f1; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 18px; color: #7f8c8d; margin-bottom: 20px; }
+        
+        .product-info h1 { font-size: 28px; color: #2c3e50; margin-bottom: 15px; }
+        .brand { color: #3498db; font-size: 16px; margin-bottom: 10px; }
+        .rating { margin: 15px 0; }
+        .stars { color: #f39c12; margin-right: 10px; }
+        
+        .price-section { background: #e8f5e8; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .current-price { font-size: 32px; font-weight: bold; color: #27ae60; }
+        .original-price { font-size: 18px; color: #e74c3c; text-decoration: line-through; margin-left: 10px; }
+        .savings { color: #27ae60; font-weight: bold; margin-top: 5px; }
+        
+        .shipping-info { background: #fff3cd; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #ffc107; }
+        
+        .stock-info { margin: 15px 0; padding: 10px; border-radius: 4px; }
+        .in-stock { background: #d4edda; color: #155724; }
+        .low-stock { background: #fff3cd; color: #856404; }
+        
+        .product-details { margin: 20px 0; }
+        .detail-item { margin: 8px 0; }
+        .detail-label { font-weight: bold; display: inline-block; width: 120px; }
+        
+        .loading { color: #666; font-style: italic; }
+        .error { color: #e74c3c; }
+        
+        .api-data { background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #17a2b8; }
+        .api-label { font-weight: bold; color: #17a2b8; }
+        
+        .buttons { margin: 30px 0; }
+        .btn { padding: 12px 24px; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; margin-right: 10px; }
+        .btn-primary { background: #3498db; color: white; }
+        .btn-secondary { background: #95a5a6; color: white; }
+        
+        .specifications { background: white; padding: 20px; border-radius: 8px; margin-top: 20px; }
+        .spec-table { width: 100%; border-collapse: collapse; }
+        .spec-table th, .spec-table td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        .spec-table th { background: #f8f9fa; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="nav">
+            <div class="logo">🛒 TechMart</div>
+            <div>Electronics • Audio • Headphones</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> > <a href="/electronics">Electronics</a> > <a href="/audio">Audio</a> > <span id="breadcrumb-product">Loading...</span>
+        </div>
+
+        <div class="product-section">
+            <div class="product-images">
+                <img src="https://placehold.co/400x300/2c3e50/ffffff?text=Headphones+2024" alt="Headphones 2024" class="main-image">
+                <div style="font-size: 14px; color: #666;">360° View Available</div>
+            </div>
+
+            <div class="product-info">
+                <!-- Static HTML Content -->
+                <div class="brand">Brand: <span id="brand">AudioTech Pro</span></div>
+                <h1 id="title">Premium Wireless Noise-Canceling Headphones</h1>
+                
+                <div class="rating">
+                    <span class="stars">★★★★☆</span>
+                    <span id="rating">4.2</span> (<span id="review-count">Loading...</span> reviews)
+                </div>
+
+                <!-- JavaScript Populated Content -->
+                <div class="price-section">
+                    <div class="current-price">$<span id="price">Loading...</span></div>
+                    <div class="original-price">$<span id="original-price">Loading...</span></div>
+                    <div class="savings">You save: $<span id="savings">Loading...</span></div>
+                </div>
+
+                <div class="shipping-info">
+                    <strong>🚚 Shipping:</strong> $<span id="shippingPrice">Loading...</span>
+                    <div id="delivery-estimate" style="margin-top: 5px; font-size: 14px;">Loading delivery estimate...</div>
+                </div>
+
+                <div class="stock-info" id="stock-container">
+                    <span id="stock-status">Checking availability...</span>
+                </div>
+
+                <!-- Static Product Details -->
+                <div class="product-details">
+                    <div class="detail-item">
+                        <span class="detail-label">SKU:</span>
+                        <span id="sku">ATP-WH-2024-PRO</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Model:</span>
+                        <span id="model">WH-2024-PRO</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Color:</span>
+                        <span id="color">Midnight Black</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Warranty:</span>
+                        <span id="warranty">2 Years International</span>
+                    </div>
+                </div>
+
+                <!-- Additional Product Info -->
+                <div class="api-data">
+                    <div class="api-label">📊 Additional Details</div>
+                    <div class="detail-item">
+                        <span class="detail-label">Category:</span>
+                        <span id="category">Electronics > Audio > Headphones</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Availability:</span>
+                        <span id="availability">Available Online & In-Store</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Return Policy:</span>
+                        <span id="return-policy">30-day free returns</span>
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <button class="btn btn-primary">Add to Cart</button>
+                    <button class="btn btn-secondary">Add to Wishlist</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="specifications">
+            <h3>Technical Specifications</h3>
+            <table class="spec-table">
+                <tr><th>Feature</th><th>Specification</th></tr>
+                <tr><td>Driver Size</td><td id="driver-size">40mm Dynamic</td></tr>
+                <tr><td>Frequency Response</td><td id="frequency">20Hz - 20kHz</td></tr>
+                <tr><td>Battery Life</td><td id="battery">Loading...</td></tr>
+                <tr><td>Charging Time</td><td id="charging">Loading...</td></tr>
+                <tr><td>Weight</td><td id="weight">285g</td></tr>
+                <tr><td>Connectivity</td><td id="connectivity">Bluetooth 5.0, USB-C</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- JSON Data Embedded in Script Tags (Real-world pattern) -->
+    <script type="application/json" id="product-data">
+    {
+        "product": {
+            "id": "ATP-WH-2024-PRO",
+            "name": "Premium Wireless Noise-Canceling Headphones",
+            "brand": "AudioTech Pro",
+            "pricing": {
+                "basePrice": 149.99,
+                "originalPrice": 179.99,
+                "discount": 30.00,
+                "shippingThreshold": 100.00,
+                "freeShippingRate": 9.99
+            },
+            "inventory": {
+                "stockLevels": ["In Stock", "Low Stock", "Only 3 left", "Back in Stock", "Limited Quantity"],
+                "deliveryRange": {
+                    "min": 2,
+                    "max": 4
+                }
+            },
+            "reviews": {
+                "rating": 4.2,
+                "countRange": {
+                    "min": 150,
+                    "max": 650
+                }
+            },
+            "specifications": {
+                "battery": "30 hours",
+                "charging": "2.5 hours",
+                "weight": "280g",
+                "connectivity": "Bluetooth 5.0, USB-C",
+                "features": ["Active Noise Cancellation", "Quick Charge", "Voice Assistant"]
+            }
+        }
+    }
+    </script>
+
+
+
+    <script>
+        // Global product data (parsed from JSON)
+        let productData = null;
+
+        // Parse embedded JSON data (real-world pattern)
+        function parseEmbeddedData() {
+            try {
+                // Parse product data from embedded JSON
+                const productScript = document.getElementById('product-data');
+                productData = JSON.parse(productScript.textContent);
+                
+                console.log('Product data loaded:', productData);
+            } catch (error) {
+                console.error('Error parsing embedded JSON data:', error);
+            }
+        }
+        
+        // 1. JavaScript populated data (using parsed JSON)
+        function populateJavaScriptData() {
+            if (!productData) {
+                console.error('Product data not available');
+                return;
+            }
+            
+            const product = productData.product;
+            
+            // Populate pricing data from JSON
+            document.getElementById('price').textContent = product.pricing.basePrice.toFixed(2);
+            document.getElementById('original-price').textContent = product.pricing.originalPrice.toFixed(2);
+            document.getElementById('savings').textContent = product.pricing.discount.toFixed(2);
+            
+            // Calculate shipping from JSON rules
+            const shippingPrice = product.pricing.basePrice > product.pricing.shippingThreshold ? 0 : product.pricing.standardShipping;
+            document.getElementById('shippingPrice').textContent = shippingPrice.toFixed(2);
+            
+            // Generate delivery estimate from JSON config
+            const deliveryDays = Math.floor(Math.random() * (product.inventory.deliveryRange.max - product.inventory.deliveryRange.min + 1)) + product.inventory.deliveryRange.min;
+            document.getElementById('delivery-estimate').textContent = 
+                shippingPrice === 0 ? `FREE delivery in ${deliveryDays} business days` : `Delivery in ${deliveryDays} business days`;
+            
+            // Generate review count from JSON range
+            const reviewCount = Math.floor(Math.random() * (product.reviews.countRange.max - product.reviews.countRange.min + 1)) + product.reviews.countRange.min;
+            document.getElementById('review-count').textContent = reviewCount;
+            
+            // Select random stock status from JSON data
+            const randomStock = product.inventory.stockLevels[Math.floor(Math.random() * product.inventory.stockLevels.length)];
+            
+            const stockContainer = document.getElementById('stock-container');
+            stockContainer.className = `stock-info ${randomStock.class}`;
+            document.getElementById('stock-status').textContent = randomStock.status;
+            
+            // Update breadcrumb from JSON
+            document.getElementById('breadcrumb-product').textContent = product.name;
+            
+            // Populate specifications from JSON
+            document.getElementById('battery').textContent = product.specifications.battery;
+            document.getElementById('charging').textContent = product.specifications.charging;
+            document.getElementById('weight').textContent = product.specifications.weight;
+            document.getElementById('connectivity').textContent = product.specifications.connectivity;
+        }
+
+
+
+        // 2. Real-time content updates (simulating dynamic changes)
+        function simulateRealTimeUpdates() {
+            setInterval(() => {
+                if (!productData) return;
+                
+                // Simulate real-time stock updates using JSON data
+                const stockLevels = productData.product.inventory.stockLevels;
+                const randomStock = stockLevels[Math.floor(Math.random() * stockLevels.length)];
+                document.getElementById('stock-status').textContent = randomStock;
+                
+                // Simulate review count changes
+                const reviewRange = productData.product.reviews.countRange;
+                const newReviewCount = Math.floor(Math.random() * (reviewRange.max - reviewRange.min + 1)) + reviewRange.min;
+                document.getElementById('review-count').textContent = `${newReviewCount} reviews`;
+                
+            }, 15000); // Update every 15 seconds
+        }
+
+        // Initialize all data sources
+        document.addEventListener('DOMContentLoaded', function() {
+            // First, parse embedded JSON data (real-world pattern)
+            parseEmbeddedData();
+            
+            // Then populate JavaScript data using parsed JSON
+            populateJavaScriptData();
+            
+            // Start real-time updates
+            simulateRealTimeUpdates();
+        });
+
+        // Test function to refresh all dynamic data
+        function refreshData() {
+            // Re-parse JSON data and repopulate
+            parseEmbeddedData();
+            populateJavaScriptData();
+        }
+
+        // Expose refresh function globally for testing
+        window.refreshData = refreshData;
+    </script>
+</body>
+</html>

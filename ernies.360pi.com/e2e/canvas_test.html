@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas Fingerprinting Test</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    canvas { border: 1px solid #ccc; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Canvas Fingerprint Test</h1>
+  <p>This page renders text to a canvas and exposes the fingerprint via <code>window._canvas_fp</code>.</p>
+  <canvas id="test-canvas" width="300" height="80"></canvas>
+  <pre id="fp-output">Loading fingerprint...</pre>
+
+  <script>
+    function renderAndExtractCanvasFingerprint() {
+      const canvas = document.getElementById("test-canvas");
+      const ctx = canvas.getContext("2d");
+
+      // Draw text and shapes
+      ctx.textBaseline = "top";
+      ctx.font = "16px Arial";
+      ctx.fillStyle = "#f60";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#069";
+      ctx.fillText("canvas-fingerprint", 10, 10);
+      ctx.fillStyle = "rgba(102, 204, 0, 0.7)";
+      ctx.fillText("test", 10, 40);
+
+      // Extract base64 fingerprint
+      const fp = canvas.toDataURL();
+      window._canvas_fp = fp;
+
+      // Show a preview in the DOM
+      document.getElementById("fp-output").textContent = fp.slice(0, 100) + "...";
+    }
+
+    window.addEventListener('load', () => {
+      setTimeout(renderAndExtractCanvasFingerprint, 200); // delay allows extension injections
+    });
+  </script>
+</body>
+</html>

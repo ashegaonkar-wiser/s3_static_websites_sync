@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+h1 {
+    color: #333;
+}
+
+.resource-container {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.test-image {
+    max-width: 150px;
+    margin: 10px;
+    border: 1px solid #ddd;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#ajax-output1, #ajax-output2 {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-left: 3px solid #4CAF50;
+}

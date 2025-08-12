@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chameleon E2E Test Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .test-element {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e8f8e8;
+            border-left: 4px solid #2ecc71;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chameleon E2E Test Home</h1>
+        <p>This page is used for testing the Chameleon.</p>
+        
+        <div class="test-element" id="test-element">
+            <h2>Test Element</h2>
+            <p>This element can be targeted in Chameleon tests.</p>
+            <p>Element ID: <code>test-element</code></p>
+        </div>
+        
+        <div class="status" id="status">
+            <h2>Connection Status</h2>
+            <p>Connection successful!</p>
+            <p>Page loaded at: <span id="timestamp"></span></p>
+        </div>
+        
+        <button id="test-button" onclick="document.getElementById('status').innerHTML += '<p>Button clicked!</p>'">
+            Test Button
+        </button>
+    </div>
+
+    <script>
+        // Add timestamp when page loads
+        document.getElementById('timestamp').textContent = new Date().toISOString();
+        
+        // Add a custom attribute that can be checked by tests
+        document.documentElement.setAttribute('data-test-loaded', 'true');
+    </script>
+</body>
+</html>

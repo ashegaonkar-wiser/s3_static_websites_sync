@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Resources</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script1.js"></script>
+</head>
+<body>
+    <h1>Background Resources Loader</h1>
+    <p>This page loads various resources to test URL blocking functionality.</p>
+    
+    <div class="resource-container">
+        <h2>Images</h2>
+        <img src="image1.png" alt="Test Image 1" class="test-image">
+        <img src="image2.gif" alt="Test Image 2" class="test-image">
+    </div>
+    
+    <div class="resource-container">
+        <h2>Scripts</h2>
+        <div id="script-output1">External script 1 not loaded</div>
+        <div id="script-output2">External script 2 not loaded</div>
+        <div id="script-output3">Embedded script 3 not loaded</div>
+    </div>
+    
+    <div class="resource-container">
+        <h2>AJAX Requests</h2>
+        <button id="ajax-button1">Load Data 1</button>
+        <div id="ajax-output1">AJAX 1 not loaded</div>
+        
+        <button id="ajax-button2">Load Data 2</button>
+        <div id="ajax-output2">AJAX 2 not loaded</div>
+    </div>
+    
+    <div class="resource-container">
+        <h2>Iframe Content</h2>
+        <iframe src="iframe.html" width="100%" height="150"></iframe>
+    </div>
+    
+    <script src="script2.js"></script>
+    <script>
+        // Set up AJAX requests
+        document.getElementById('ajax-button1').addEventListener('click', function() {
+            fetch('data1.json')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('ajax-output1').textContent = 'AJAX 1 loaded: ' + JSON.stringify(data);
+                })
+                .catch(error => {
+                    document.getElementById('ajax-output1').textContent = 'AJAX 1 failed: ' + error.message;
+                });
+        });
+        
+        document.getElementById('ajax-button2').addEventListener('click', function() {
+            fetch('data2.json')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('ajax-output2').textContent = 'AJAX 2 loaded: ' + JSON.stringify(data);
+                })
+                .catch(error => {
+                    document.getElementById('ajax-output2').textContent = 'AJAX 2 failed: ' + error.message;
+                });
+        });
+        
+        // Third script execution
+        document.getElementById('script-output3').textContent = 'Embedded script 3 loaded successfully';
+    </script>
+</body>
+</html>

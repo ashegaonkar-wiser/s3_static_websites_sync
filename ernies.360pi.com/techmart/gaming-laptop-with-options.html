@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechMart - Gaming Laptop Pro X1</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; }
+        
+        .header { background: #2c3e50; color: white; padding: 15px 0; }
+        .nav { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .logo { font-size: 24px; font-weight: bold; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .breadcrumb { margin-bottom: 20px; color: #666; }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        
+        .product-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        
+        .product-images { text-align: center; }
+        .main-image { width: 100%; max-width: 400px; border-radius: 8px; }
+        
+        .product-details h1 { font-size: 28px; margin-bottom: 10px; color: #2c3e50; }
+        .brand { color: #3498db; font-weight: bold; margin-bottom: 15px; }
+        .price-section { margin: 20px 0; }
+        .current-price { font-size: 32px; color: #e74c3c; font-weight: bold; }
+        .original-price { font-size: 18px; color: #999; text-decoration: line-through; margin-left: 10px; }
+        .savings { color: #27ae60; font-weight: bold; margin-left: 10px; }
+        
+        .options-section { margin: 30px 0; }
+        .option-group { margin-bottom: 25px; }
+        .option-label { font-weight: bold; margin-bottom: 10px; display: block; color: #2c3e50; }
+        .option-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+        .option-btn { 
+            padding: 10px 15px; 
+            border: 2px solid #ddd; 
+            background: white; 
+            cursor: pointer; 
+            border-radius: 5px; 
+            transition: all 0.3s;
+        }
+        .option-btn:hover { border-color: #3498db; }
+        .option-btn.selected { border-color: #3498db; background: #3498db; color: white; }
+        .option-btn.loading { opacity: 0.6; cursor: not-allowed; }
+        
+        .loading-spinner { 
+            display: inline-block; 
+            width: 16px; 
+            height: 16px; 
+            border: 2px solid #f3f3f3; 
+            border-top: 2px solid #3498db; 
+            border-radius: 50%; 
+            animation: spin 1s linear infinite; 
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .option-price { font-size: 14px; color: #666; margin-top: 5px; }
+        .option-stock { font-size: 12px; color: #27ae60; margin-top: 3px; }
+        .option-stock.low { color: #e74c3c; }
+        
+        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
+        .spec-item { padding: 10px; background: #f8f9fa; border-radius: 5px; }
+        .spec-label { font-weight: bold; color: #2c3e50; }
+        .spec-value { color: #666; margin-top: 5px; }
+        
+        .error-message { color: #e74c3c; padding: 10px; background: #ffeaea; border-radius: 5px; margin: 10px 0; }
+        .success-message { color: #27ae60; padding: 10px; background: #eafaf1; border-radius: 5px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">TechMart</div>
+            <div>Gaming • Laptops • Electronics</div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> > <a href="/gaming">Gaming</a> > <a href="/gaming/laptops">Laptops</a> > Gaming Laptop Pro X1
+        </div>
+
+        <div class="product-section">
+            <div class="product-images">
+                <img src="https://placehold.co/400x300/2c3e50/ffffff?text=Gaming+Laptop+Pro+X1" alt="Gaming Laptop Pro X1" class="main-image">
+            </div>
+
+            <div class="product-details">
+                <!-- Static Product Information -->
+                <div class="brand" id="brand">TechForce Gaming</div>
+                <h1 id="title">Gaming Laptop Pro X1 - High Performance</h1>
+                <div id="sku" style="color: #666; margin-bottom: 10px;">SKU: TFG-LP-X1-2024</div>
+                <div id="model" style="color: #666; margin-bottom: 15px;">Model: Pro X1</div>
+
+                <!-- Dynamic Pricing (updated based on selected options) -->
+                <div class="price-section">
+                    <span class="current-price">$<span id="price">1299.99</span></span>
+                    <span class="original-price">$<span id="original-price">1499.99</span></span>
+                    <span class="savings">Save $<span id="savings">200.00</span></span>
+                </div>
+
+                <!-- Product Options (Loaded via HTTP calls) -->
+                <div class="options-section">
+                    <!-- RAM Configuration Options -->
+                    <div class="option-group">
+                        <label class="option-label">Memory (RAM)</label>
+                        <div class="option-buttons" id="ram-options">
+                            <div class="loading-spinner"></div> Loading options...
+                        </div>
+                        <div id="ram-error" class="error-message" style="display: none;"></div>
+                    </div>
+
+                    <!-- Storage Options -->
+                    <div class="option-group">
+                        <label class="option-label">Storage</label>
+                        <div class="option-buttons" id="storage-options">
+                            <div class="loading-spinner"></div> Loading options...
+                        </div>
+                        <div id="storage-error" class="error-message" style="display: none;"></div>
+                    </div>
+
+                    <!-- Graphics Card Options -->
+                    <div class="option-group">
+                        <label class="option-label">Graphics Card</label>
+                        <div class="option-buttons" id="gpu-options">
+                            <div class="loading-spinner"></div> Loading options...
+                        </div>
+                        <div id="gpu-error" class="error-message" style="display: none;"></div>
+                    </div>
+
+                    <!-- Color Options -->
+                    <div class="option-group">
+                        <label class="option-label">Color</label>
+                        <div class="option-buttons" id="color-options">
+                            <div class="loading-spinner"></div> Loading options...
+                        </div>
+                        <div id="color-error" class="error-message" style="display: none;"></div>
+                    </div>
+                </div>
+
+                <!-- Selected Configuration Summary -->
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <div class="spec-label">Selected RAM</div>
+                        <div class="spec-value" id="selected-ram">Loading...</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Selected Storage</div>
+                        <div class="spec-value" id="selected-storage">Loading...</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Selected GPU</div>
+                        <div class="spec-value" id="selected-gpu">Loading...</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Selected Color</div>
+                        <div class="spec-value" id="selected-color">Loading...</div>
+                    </div>
+                </div>
+
+                <!-- Additional Product Info -->
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <div class="spec-label">Processor</div>
+                        <div class="spec-value" id="processor">Intel Core i7-13700H</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Display</div>
+                        <div class="spec-value" id="display">15.6" 144Hz QHD</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Weight</div>
+                        <div class="spec-value" id="weight">2.3 kg</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Warranty</div>
+                        <div class="spec-value" id="warranty">2 Years International</div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Stock and Shipping -->
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <div class="spec-label">Stock Status</div>
+                        <div class="spec-value" id="stock-status">Loading...</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Shipping</div>
+                        <div class="spec-value">$<span id="shippingPrice">0.00</span> (Free shipping)</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Delivery</div>
+                        <div class="spec-value" id="delivery-estimate">Loading...</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Configuration ID</div>
+                        <div class="spec-value" id="config-id">TFG-BASE-CONFIG</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state for selected options
+        let selectedOptions = {
+            ram: null,
+            storage: null,
+            gpu: null,
+            color: null
+        };
+
+        let basePrice = 1299.99;
+        let currentTotalPrice = basePrice;
+
+        // Make actual HTTP API calls to fetch product options from JSON files
+        async function fetchProductOptions(optionType) {
+            try {
+                console.log(`Fetching ${optionType} options from API...`);
+                
+                // Make actual HTTP request to JSON file
+                const response = await fetch(`api/${optionType}-options.json`);
+                
+                // Check if request was successful
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status} - Failed to load ${optionType} options`);
+                }
+                
+                // Parse JSON response
+                const options = await response.json();
+                
+                console.log(`Successfully loaded ${options.length} ${optionType} options`);
+                return options;
+                
+            } catch (error) {
+                console.error(`Error fetching ${optionType} options:`, error);
+                
+                // Provide more specific error messages
+                if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                    throw new Error(`Network error: Unable to fetch ${optionType} options. Please check your connection.`);
+                } else if (error.message.includes('HTTP error')) {
+                    throw new Error(`Server error: ${error.message}`);
+                } else {
+                    throw new Error(`Failed to load ${optionType} options: ${error.message}`);
+                }
+            }
+        }
+
+        // Render option buttons
+        function renderOptions(optionType, options) {
+            const container = document.getElementById(`${optionType}-options`);
+            const errorContainer = document.getElementById(`${optionType}-error`);
+            
+            // Clear loading state
+            container.innerHTML = '';
+            errorContainer.style.display = 'none';
+
+            options.forEach((option, index) => {
+                const button = document.createElement('div');
+                button.className = 'option-btn';
+                button.dataset.optionType = optionType;
+                button.dataset.optionId = option.id;
+                button.dataset.price = option.price;
+                
+                // Select first option by default
+                if (index === 0) {
+                    button.classList.add('selected');
+                    selectedOptions[optionType] = option;
+                    updateSelectedSummary(optionType, option);
+                }
+
+                const priceText = option.price > 0 ? `+$${option.price}` : 'Included';
+                const stockClass = option.stock < 10 ? 'low' : '';
+                const stockText = option.stock < 10 ? `Only ${option.stock} left` : `${option.stock} in stock`;
+
+                button.innerHTML = `
+                    <div><strong>${option.name}</strong></div>
+                    <div class="option-price">${priceText}</div>
+                    <div class="option-stock ${stockClass}">${stockText}</div>
+                `;
+
+                button.addEventListener('click', () => selectOption(optionType, option, button));
+                container.appendChild(button);
+            });
+
+            // Update total price after rendering
+            updateTotalPrice();
+        }
+
+        // Handle option selection
+        function selectOption(optionType, option, buttonElement) {
+            // Remove selected class from all buttons in this group
+            const allButtons = document.querySelectorAll(`[data-option-type="${optionType}"]`);
+            allButtons.forEach(btn => btn.classList.remove('selected'));
+
+            // Add selected class to clicked button
+            buttonElement.classList.add('selected');
+
+            // Update selected options state
+            selectedOptions[optionType] = option;
+
+            // Update UI
+            updateSelectedSummary(optionType, option);
+            updateTotalPrice();
+            updateConfigurationId();
+        }
+
+        // Update selected option summary
+        function updateSelectedSummary(optionType, option) {
+            const summaryElement = document.getElementById(`selected-${optionType}`);
+            if (summaryElement) {
+                summaryElement.textContent = option.description || option.name;
+            }
+        }
+
+        // Update total price based on selected options
+        function updateTotalPrice() {
+            let totalPrice = basePrice;
+            
+            Object.values(selectedOptions).forEach(option => {
+                if (option && option.price) {
+                    totalPrice += option.price;
+                }
+            });
+
+            currentTotalPrice = totalPrice;
+            document.getElementById('price').textContent = totalPrice.toFixed(2);
+            
+            // Update savings
+            const originalPrice = parseFloat(document.getElementById('original-price').textContent);
+            const savings = originalPrice - totalPrice;
+            document.getElementById('savings').textContent = Math.max(0, savings).toFixed(2);
+        }
+
+        // Update configuration ID based on selected options
+        function updateConfigurationId() {
+            const configParts = ['TFG'];
+            
+            if (selectedOptions.ram) configParts.push(selectedOptions.ram.id.toUpperCase());
+            if (selectedOptions.storage) configParts.push(selectedOptions.storage.id.toUpperCase());
+            if (selectedOptions.gpu) configParts.push(selectedOptions.gpu.id.toUpperCase());
+            if (selectedOptions.color) configParts.push(selectedOptions.color.id.toUpperCase());
+            
+            document.getElementById('config-id').textContent = configParts.join('-');
+        }
+
+        // Show error message for failed option loading
+        function showError(optionType, error) {
+            const container = document.getElementById(`${optionType}-options`);
+            const errorContainer = document.getElementById(`${optionType}-error`);
+            
+            container.innerHTML = '<button class="option-btn" onclick="loadOptions(\'' + optionType + '\')">Retry Loading</button>';
+            errorContainer.textContent = error.message;
+            errorContainer.style.display = 'block';
+        }
+
+        // Load options for a specific type
+        async function loadOptions(optionType) {
+            try {
+                const options = await fetchProductOptions(optionType);
+                renderOptions(optionType, options);
+            } catch (error) {
+                console.error(`Error loading ${optionType} options:`, error);
+                showError(optionType, error);
+            }
+        }
+
+        // Update stock status and delivery estimate
+        function updateDynamicInfo() {
+            // Simulate stock status based on selected options
+            const lowestStock = Math.min(...Object.values(selectedOptions)
+                .filter(option => option && option.stock)
+                .map(option => option.stock));
+            
+            const stockElement = document.getElementById('stock-status');
+            if (lowestStock < 5) {
+                stockElement.textContent = `Low Stock - Only ${lowestStock} left`;
+                stockElement.style.color = '#e74c3c';
+            } else if (lowestStock < 15) {
+                stockElement.textContent = `Limited Stock - ${lowestStock} available`;
+                stockElement.style.color = '#f39c12';
+            } else {
+                stockElement.textContent = 'In Stock';
+                stockElement.style.color = '#27ae60';
+            }
+
+            // Update delivery estimate
+            const deliveryDays = currentTotalPrice > 2000 ? '1-2' : '2-3';
+            document.getElementById('delivery-estimate').textContent = `${deliveryDays} business days`;
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('Loading product options...');
+
+            // Load all option types
+            const optionTypes = ['ram', 'storage', 'gpu', 'color'];
+            
+            // Load options sequentially to simulate real API behavior
+            for (const optionType of optionTypes) {
+                await loadOptions(optionType);
+                // Small delay between API calls
+                await new Promise(resolve => setTimeout(resolve, 200));
+            }
+
+            // Update dynamic info after all options are loaded
+            setTimeout(updateDynamicInfo, 500);
+
+            // Set up periodic updates for dynamic content
+            setInterval(() => {
+                updateDynamicInfo();
+            }, 30000); // Update every 30 seconds
+        });
+
+        // Expose refresh function for testing
+        window.refreshOptions = function() {
+            location.reload();
+        };
+    </script>
+</body>
+</html>

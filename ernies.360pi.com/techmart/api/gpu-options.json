@@ -1,0 +1,47 @@
+[
+    {
+        "id": "rtx-4060",
+        "name": "RTX 4060",
+        "price": 0,
+        "stock": 18,
+        "description": "NVIDIA RTX 4060 8GB",
+        "specifications": {
+            "brand": "NVIDIA",
+            "model": "GeForce RTX 4060",
+            "memory": "8GB GDDR6",
+            "memoryBus": "128-bit",
+            "baseClock": "1830 MHz",
+            "boostClock": "2460 MHz"
+        }
+    },
+    {
+        "id": "rtx-4070",
+        "name": "RTX 4070",
+        "price": 399,
+        "stock": 12,
+        "description": "NVIDIA RTX 4070 12GB",
+        "specifications": {
+            "brand": "NVIDIA",
+            "model": "GeForce RTX 4070",
+            "memory": "12GB GDDR6X",
+            "memoryBus": "192-bit",
+            "baseClock": "1920 MHz",
+            "boostClock": "2475 MHz"
+        }
+    },
+    {
+        "id": "rtx-4080",
+        "name": "RTX 4080",
+        "price": 899,
+        "stock": 3,
+        "description": "NVIDIA RTX 4080 16GB",
+        "specifications": {
+            "brand": "NVIDIA",
+            "model": "GeForce RTX 4080",
+            "memory": "16GB GDDR6X",
+            "memoryBus": "256-bit",
+            "baseClock": "2205 MHz",
+            "boostClock": "2505 MHz"
+        }
+    }
+]

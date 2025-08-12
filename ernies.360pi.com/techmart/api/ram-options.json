@@ -1,0 +1,41 @@
+[
+    {
+        "id": "ram-16gb",
+        "name": "16GB DDR5",
+        "price": 0,
+        "stock": 25,
+        "description": "16GB DDR5-4800",
+        "specifications": {
+            "type": "DDR5",
+            "speed": "4800MHz",
+            "capacity": "16GB",
+            "modules": "2x8GB"
+        }
+    },
+    {
+        "id": "ram-32gb",
+        "name": "32GB DDR5",
+        "price": 299,
+        "stock": 15,
+        "description": "32GB DDR5-4800",
+        "specifications": {
+            "type": "DDR5",
+            "speed": "4800MHz",
+            "capacity": "32GB",
+            "modules": "2x16GB"
+        }
+    },
+    {
+        "id": "ram-64gb",
+        "name": "64GB DDR5",
+        "price": 799,
+        "stock": 5,
+        "description": "64GB DDR5-4800",
+        "specifications": {
+            "type": "DDR5",
+            "speed": "4800MHz",
+            "capacity": "64GB",
+            "modules": "2x32GB"
+        }
+    }
+]

@@ -1,0 +1,44 @@
+[
+    {
+        "id": "ssd-512gb",
+        "name": "512GB NVMe SSD",
+        "price": 0,
+        "stock": 30,
+        "description": "512GB PCIe 4.0",
+        "specifications": {
+            "capacity": "512GB",
+            "interface": "PCIe 4.0 x4",
+            "type": "NVMe M.2",
+            "readSpeed": "7000 MB/s",
+            "writeSpeed": "5000 MB/s"
+        }
+    },
+    {
+        "id": "ssd-1tb",
+        "name": "1TB NVMe SSD",
+        "price": 199,
+        "stock": 20,
+        "description": "1TB PCIe 4.0",
+        "specifications": {
+            "capacity": "1TB",
+            "interface": "PCIe 4.0 x4",
+            "type": "NVMe M.2",
+            "readSpeed": "7000 MB/s",
+            "writeSpeed": "6000 MB/s"
+        }
+    },
+    {
+        "id": "ssd-2tb",
+        "name": "2TB NVMe SSD",
+        "price": 499,
+        "stock": 8,
+        "description": "2TB PCIe 4.0",
+        "specifications": {
+            "capacity": "2TB",
+            "interface": "PCIe 4.0 x4",
+            "type": "NVMe M.2",
+            "readSpeed": "7000 MB/s",
+            "writeSpeed": "6500 MB/s"
+        }
+    }
+]

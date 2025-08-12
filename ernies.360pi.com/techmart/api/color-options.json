@@ -1,0 +1,54 @@
+[
+    {
+        "id": "black",
+        "name": "Midnight Black",
+        "price": 0,
+        "stock": 50,
+        "description": "Matte black finish",
+        "specifications": {
+            "finish": "Matte",
+            "material": "Aluminum alloy",
+            "coating": "Anti-fingerprint",
+            "colorCode": "#1a1a1a"
+        }
+    },
+    {
+        "id": "silver",
+        "name": "Space Silver",
+        "price": 0,
+        "stock": 35,
+        "description": "Brushed aluminum",
+        "specifications": {
+            "finish": "Brushed",
+            "material": "Aluminum alloy",
+            "coating": "Anodized",
+            "colorCode": "#c0c0c0"
+        }
+    },
+    {
+        "id": "blue",
+        "name": "Gaming Blue",
+        "price": 49,
+        "stock": 20,
+        "description": "Metallic blue accent",
+        "specifications": {
+            "finish": "Metallic",
+            "material": "Aluminum alloy",
+            "coating": "Premium paint",
+            "colorCode": "#1e3a8a"
+        }
+    },
+    {
+        "id": "red",
+        "name": "Racing Red",
+        "price": 49,
+        "stock": 15,
+        "description": "Glossy red finish",
+        "specifications": {
+            "finish": "Glossy",
+            "material": "Aluminum alloy",
+            "coating": "High-gloss paint",
+            "colorCode": "#dc2626"
+        }
+    }
+]
