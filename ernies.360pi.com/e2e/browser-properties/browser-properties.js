@@ -118,6 +118,41 @@ function getWindowProps() {
     }
 }
 
+function getEnumerationProps() {
+    try {
+        const limit = 200;
+        const safeSlice = (arr) => Array.isArray(arr) ? arr.slice(0, limit) : [];
+
+        const windowOwnPropertyNames = safeSlice(Object.getOwnPropertyNames(window));
+        const windowKeys = safeSlice(Object.keys(window));
+
+        const documentOwnPropertyNames = typeof document !== 'undefined'
+            ? safeSlice(Object.getOwnPropertyNames(document))
+            : [];
+
+        // navigator may have most props on its prototype; include both direct and prototype names
+        const navigatorDirect = typeof navigator !== 'undefined'
+            ? safeSlice(Object.getOwnPropertyNames(navigator))
+            : [];
+        const navigatorProto = (typeof navigator !== 'undefined' && Object.getPrototypeOf(navigator))
+            ? safeSlice(Object.getOwnPropertyNames(Object.getPrototypeOf(navigator)))
+            : [];
+
+        return {
+            windowOwnPropertyNames,
+            windowKeys,
+            documentOwnPropertyNames,
+            navigatorOwnPropertyNames: navigatorDirect,
+            navigatorPrototypePropertyNames: navigatorProto,
+        };
+    } catch (e) {
+        return {
+            error: e.message,
+            stack: e.stack,
+        };
+    }
+}
+
 function getWebGLProps() {
     try {
         // Create a hidden canvas for WebGL testing
@@ -445,6 +480,7 @@ function getAllProps() {
         screen: getScreenProps(),
         document: getDocumentProps(),
         window: getWindowProps(),
+        enumeration: getEnumerationProps(),
         webgl: getWebGLProps(),
         fonts: getFontProps(),
     };
